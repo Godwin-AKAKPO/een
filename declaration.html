@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un secret pour toi, Niso... 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes:wght@400&family=Sacramento:wght@400&family=Poppins:wght@300;400;600&family=Dancing+Script:wght@400;500;600;700&family=Comfortaa:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comfortaa', sans-serif;
+            background: radial-gradient(ellipse at center, #ffeef8, #ffe8f5, #ffd9ed, #ffcae5, #ffb6dc, #ff9bd1);
+            background-size: 400% 400%;
+            animation: secretGradient 15s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            color: #4a148c;
+        }
+
+        @keyframes secretGradient {
+            0% { background-position: 0% 50%; }
+            33% { background-position: 100% 100%; }
+            66% { background-position: 50% 0%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Canvas pour les cœurs qui tombent */
+        #heartsCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Animation d'entrée mystérieuse */
+        .entrance-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #4a148c, #7b1fa2, #ad1457, #e91e63);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: revealSecret 3s ease forwards;
+        }
+
+        .entrance-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            color: white;
+            text-align: center;
+            opacity: 0;
+            animation: entranceTextAppear 2s ease forwards 0.5s;
+        }
+
+        @keyframes revealSecret {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; pointer-events: none; }
+        }
+
+        @keyframes entranceTextAppear {
+            0% { 
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Titre principal */
+        .secret-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: #880e4f;
+            text-align: center;
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: titleReveal 2s ease forwards 3.5s;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+        }
+
+        @keyframes titleReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Container des phrases défilantes */
+        .phrases-container {
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .secret-phrase {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            font-weight: 500;
+            text-align: center;
+            color: #4a148c;
+            position: absolute;
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            max-width: 800px;
+            padding: 0 20px;
+            line-height: 1.4;
+        }
+
+        .secret-phrase.active {
+            animation: phraseAppear 4s ease forwards;
+        }
+
+        @keyframes phraseAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            15% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            85% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+        }
+
+        /* Phrase spéciale (plus grande et différente) */
+        .secret-phrase.special {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            color: #e91e63;
+            font-weight: 400;
+        }
+
+        .secret-phrase.emphasis {
+            color: #ad1457;
+            font-weight: 600;
+            font-size: 2.8rem;
+        }
+
+        .secret-phrase.final {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.2rem;
+            color: #880e4f;
+            font-weight: 400;
+        }
+
+        /* Bouton magique final */
+        .magic-button-container {
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .magic-button {
+            background: linear-gradient(45deg, #e91e63, #f06292, #ff4081, #ff6ec7);
+            background-size: 300% 300%;
+            animation: gradientShift 3s ease infinite;
+            color: white;
+            border: none;
+            padding: 25px 50px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(233, 30, 99, 0.4);
+            transition: all 0.4s ease;
+            font-family: 'Comfortaa', sans-serif;
+            position: relative;
+            overflow: hidden;
+            transform: perspective(1000px) rotateX(0deg);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .magic-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .magic-button:hover {
+            transform: perspective(1000px) rotateX(-10deg) translateY(-8px) scale(1.08);
+            box-shadow: 0 25px 60px rgba(233, 30, 99, 0.6);
+        }
+
+        .magic-button:hover::before {
+            left: 100%;
+        }
+
+        .magic-button:active {
+            transform: perspective(1000px) rotateX(-5deg) translateY(-4px) scale(1.05);
+        }
+
+        @keyframes buttonReveal {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Effet de pulsation pour le bouton */
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            border: 3px solid rgba(233, 30, 99, 0.4);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            animation: pulseRing 2s ease-out infinite;
+        }
+
+        @keyframes pulseRing {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* Particules flottantes douces */
+        .soft-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,182,193,0.6), rgba(255,192,203,0.3));
+            animation: softFloat 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes softFloat {
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px) scale(0.8);
+                opacity: 0.3;
+            }
+            25% { 
+                transform: translateY(-40px) translateX(20px) scale(1.2);
+                opacity: 0.6;
+            }
+            50% { 
+                transform: translateY(-80px) translateX(-10px) scale(1);
+                opacity: 0.8;
+            }
+            75% { 
+                transform: translateY(-60px) translateX(-30px) scale(1.1);
+                opacity: 0.5;
+            }
+        }
+
+        /* Étoiles scintillantes */
+        .twinkle-star {
+            position: absolute;
+            color: #ffd700;
+            font-size: 20px;
+            animation: twinkle 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.3);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .secret-title {
+                font-size: 2.5rem;
+                margin-bottom: 40px;
+            }
+            
+            .secret-phrase {
+                font-size: 2rem;
+            }
+            
+            .secret-phrase.special,
+            .secret-phrase.final {
+                font-size: 2.3rem;
+            }
+            
+            .secret-phrase.emphasis {
+                font-size: 2.1rem;
+            }
+            
+            .magic-button {
+                padding: 20px 35px;
+                font-size: 1.1rem;
+            }
+            
+            .entrance-text {
+                font-size: 2rem;
+                padding: 0 20px;
+            }
+        }
+
+        /* Fireworks */
+        .firework {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .firework-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: fireworkExplosion 1.5s ease-out forwards;
+        }
+
+        @keyframes fireworkExplosion {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Overlay d'entrée -->
+    <div class="entrance-overlay">
+        <div class="entrance-text">
+            Chut... un secret t'attend 🤫✨
+        </div>
+    </div>
+
+    <!-- Canvas pour les cœurs qui tombent -->
+    <canvas id="heartsCanvas"></canvas>
+
+    <!-- Particules douces d'ambiance -->
+    <div id="softParticles"></div>
+
+    <div class="container">
+        <h1 class="secret-title">Tu veux savoir un secret, Niso ? 💫</h1>
+        
+        <div class="phrases-container">
+            <div class="secret-phrase">Tu es belle...</div>
+            <div class="secret-phrase emphasis">Brillante...</div>
+            <div class="secret-phrase special">Unique...</div>
+            <div class="secret-phrase">Mon soleil... ☀️</div>
+            <div class="secret-phrase emphasis">Et aujourd'hui, tu as 18 ans...</div>
+            <div class="secret-phrase special">Et je t'aime encore plus fort 💖</div>
+            <div class="secret-phrase final">Tu illumines chaque jour de ma vie... ✨</div>
+        </div>
+
+        <div class="magic-button-container">
+            <div class="pulse-ring"></div>
+            <button class="magic-button" onclick="magicalResponse()">
+                💕 Clique si toi aussi tu ressens ça 💕
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let phrasesStarted = false;
+        let currentPhrase = 0;
+        const phrases = document.querySelectorAll('.secret-phrase');
+        let heartsAnimation;
+
+        // Configuration du canvas pour les cœurs qui tombent
+        const canvas = document.getElementById('heartsCanvas');
+        const ctx = canvas.getContext('2d');
+        let hearts = [];
+
+        function setupCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        // Classe Heart pour les cœurs qui tombent
+        class Heart {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = -20;
+                this.size = Math.random() * 15 + 10;
+                this.speed = Math.random() * 2 + 1;
+                this.opacity = Math.random() * 0.5 + 0.3;
+                this.color = this.getRandomHeartColor();
+                this.swing = Math.random() * 0.02 + 0.01;
+                this.swingOffset = Math.random() * Math.PI * 2;
+            }
+
+            getRandomHeartColor() {
+                const colors = [
+                    'rgba(233, 30, 99, ',
+                    'rgba(240, 98, 146, ',
+                    'rgba(255, 64, 129, ',
+                    'rgba(255, 105, 180, ',
+                    'rgba(255, 182, 193, '
+                ];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.y += this.speed;
+                this.x += Math.sin(this.y * this.swing + this.swingOffset) * 0.5;
+                
+                if (this.y > canvas.height + 20) {
+                    this.y = -20;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color + this.opacity + ')';
+                
+                // Dessiner un cœur
+                const x = this.x;
+                const y = this.y;
+                const size = this.size;
+                
+                ctx.beginPath();
+                ctx.moveTo(x, y + size/4);
+                ctx.bezierCurveTo(x, y, x - size/2, y, x - size/2, y + size/4);
+                ctx.bezierCurveTo(x - size/2, y + size/2, x, y + size, x, y + size);
+                ctx.bezierCurveTo(x, y + size, x + size/2, y + size/2, x + size/2, y + size/4);
+                ctx.bezierCurveTo(x + size/2, y, x, y, x, y + size/4);
+                ctx.closePath();
+                ctx.fill();
+                
+                ctx.restore();
+            }
+        }
+
+        // Initialiser les cœurs
+        function initHearts() {
+            hearts = [];
+            for (let i = 0; i < 30; i++) {
+                hearts.push(new Heart());
+            }
+        }
+
+        // Animation des cœurs
+        function animateHearts() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            hearts.forEach(heart => {
+                heart.update();
+                heart.draw();
+            });
+            
+            heartsAnimation = requestAnimationFrame(animateHearts);
+        }
+
+        // Créer des particules douces d'ambiance
+        function createSoftParticles() {
+            const container = document.getElementById('softParticles');
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'soft-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 8 + 4 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+                container.appendChild(particle);
+            }
+            
+            // Étoiles scintillantes
+            for (let i = 0; i < 10; i++) {
+                const star = document.createElement('div');
+                star.className = 'twinkle-star';
+                star.textContent = '✨';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                star.style.animationDuration = (2 + Math.random() * 2) + 's';
+                container.appendChild(star);
+            }
+        }
+
+        // Animation des phrases défilantes
+        function startPhrasesAnimation() {
+            if (phrasesStarted || currentPhrase >= phrases.length) return;
+            
+            phrasesStarted = true;
+            
+            function showNextPhrase() {
+                if (currentPhrase < phrases.length) {
+                    phrases[currentPhrase].classList.add('active');
+                    currentPhrase++;
+                    
+                    setTimeout(showNextPhrase, 4500); // 4.5 secondes entre chaque phrase
+                } else {
+                    // Toutes les phrases ont été montrées, montrer le bouton
+                    setTimeout(showMagicButton, 1000);
+                }
+            }
+            
+            showNextPhrase();
+        }
+
+        // Afficher le bouton magique
+        function showMagicButton() {
+            const buttonContainer = document.querySelector('.magic-button-container');
+            buttonContainer.style.animation = 'buttonReveal 2s ease forwards';
+        }
+
+        // Réponse magique au clic du bouton
+        function magicalResponse() {
+            const button = document.querySelector('.magic-button');
+            
+            // Vibration si supportée
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100, 50, 200]);
+            }
+            
+            // Animation du bouton
+            button.style.transform = 'perspective(1000px) rotateX(-15deg) translateY(-10px) scale(1.1)';
+            
+            setTimeout(() => {
+                button.style.transform = 'perspective(1000px) rotateX(0deg) translateY(0px) scale(1)';
+            }, 200);
+            
+            // Explosion de feux d'artifice
+            createFireworks();
+            
+            // Message de réponse
+            setTimeout(() => {
+                showFinalMessage();
+            }, 2000);
+        }
+
+        // Création des feux d'artifice
+        function createFireworks() {
+            const colors = ['#ff4081', '#e91e63', '#f06292', '#ffeb3b', '#4caf50', '#2196f3', '#9c27b0'];
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight * 0.6 + window.innerHeight * 0.2;
+                    
+                    createSingleFirework(x, y, colors[Math.floor(Math.random() * colors.length)]);
+                }, i * 300);
+            }
+        }
+
+        // Création d'un feu d'artifice unique
+        function createSingleFirework(x, y, color) {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = x + 'px';
+            firework.style.top = y + 'px';
+            
+            // Créer les particules
+            for (let i = 0; i < 25; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'firework-particle';
+                particle.style.backgroundColor = color;
+                
+                // Position et direction aléatoires
+                const angle = (360 / 25) * i;
+                const distance = Math.random() * 100 + 50;
+                const radians = angle * (Math.PI / 180);
+                const endX = Math.cos(radians) * distance;
+                const endY = Math.sin(radians) * distance;
+                
+                particle.animate([
+                    { 
+                        transform: 'translate(0, 0) scale(0)',
+                        opacity: 1 
+                    },
+                    { 
+                        transform: `translate(${endX}px, ${endY}px) scale(1)`,
+                        opacity: 1,
+                        offset: 0.7
+                    },
+                    { 
+                        transform: `translate(${endX * 1.3}px, ${endY * 1.3}px) scale(0)`,
+                        opacity: 0 
+                    }
+                ], {
+                    duration: 1500,
+                    easing: 'ease-out'
+                });
+                
+                firework.appendChild(particle);
+            }
+            
+            document.body.appendChild(firework);
+            
+            // Nettoyer après l'animation
+            setTimeout(() => {
+                firework.remove();
+            }, 1500);
+        }
+
+        // Message final
+        function showFinalMessage() {
+            const finalMessage = document.createElement('div');
+            finalMessage.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                padding: 40px;
+                border-radius: 20px;
+                text-align: center;
+                font-family: 'Great Vibes', cursive;
+                font-size: 2.5rem;
+                color: #880e4f;
+                box-shadow: 0 20px 60px rgba(233, 30, 99, 0.3);
+                z-index: 1001;
+                opacity: 0;
+                animation: fadeIn 2s ease forwards;
+                max-width: 90%;
+            `;
+            
+            finalMessage.innerHTML = `
+                <span style="font-size: 1.5rem; color: #e91e63; font-family: 'Dancing Script', cursive;">
+                    Cet amour est magique... ✨
+                </span>
+            `;
+            
+            // Ajouter l'animation CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    to { opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(finalMessage);
+            
+            // Supprimer après 5 secondes
+            setTimeout(() => {
+                finalMessage.style.animation = 'fadeIn 1s ease reverse forwards';
+                setTimeout(() => {
+                    finalMessage.remove();
+                }, 1000);
+            }, 5000);
+        }
+
+        // Gestion du redimensionnement
+        window.addEventListener('resize', () => {
+            setupCanvas();
+        });
+
+        // Initialisation
+        window.addEventListener('load', () => {
+            setupCanvas();
+            initHearts();
+            animateHearts();
+            createSoftParticles();
+            
+            // Commencer les phrases après l'animation d'entrée
+            setTimeout(() => {
+                startPhrasesAnimation();
+            }, 4000);
+        });
+
+        // Effets au survol de la souris
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() < 0.03) { // 3% de chance
+                createMouseSparkle(e.clientX, e.clientY);
+            }
+        });
+
+        function createMouseSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.textContent = '✨';
+            sparkle.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                font-size: 20px;
+                pointer-events: none;
+                z-index: 1000;
+                transform: translate(-50%, -50%);
+            `;
+            
+            sparkle.animate([
+                { 
+                    opacity: 1,
+                    transform: 'translate(-50%, -50%) scale(0.5)' 
+                },
+                { 
+                    opacity: 0,
+                    transform: 'translate(-50%, -80px) scale(1.5)' 
+                }
+            ], {
+                duration: 1500,
+                easing: 'ease-out'
+            });
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

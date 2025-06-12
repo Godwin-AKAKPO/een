@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joyeux 18e anniversaire, Niso 💗</title>
+    <title>EEN 💗</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes:wght@400&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -150,15 +150,15 @@
         }
 
         @keyframes glowRotate {
-            0% { 
-                background-position: 0% 50%;
+            0% {
+                 background-position: 0% 50%;
                 transform: rotate(0deg);
             }
-            50% { 
-                background-position: 100% 50%;
+            50% {
+                 background-position: 100% 50%;
             }
-            100% { 
-                background-position: 0% 50%;
+            100% {
+                 background-position: 0% 50%;
                 transform: rotate(360deg);
             }
         }
@@ -206,27 +206,6 @@
             background: linear-gradient(45deg, #f06292, #e91e63);
         }
 
-        .music-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            font-size: 1.5rem;
-            z-index: 100;
-        }
-
-        .music-control:hover {
-            transform: scale(1.1);
-            background: white;
-        }
-
         @media (max-width: 768px) {
             .main-title {
                 font-size: 2.5rem;
@@ -261,17 +240,17 @@
         }
 
         @keyframes stickerFloat {
-            0%, 100% { 
-                transform: translateY(0px) rotate(0deg) scale(1);
+            0%, 100% {
+                 transform: translateY(0px) rotate(0deg) scale(1);
             }
-            25% { 
-                transform: translateY(-20px) rotate(5deg) scale(1.1);
+            25% {
+                 transform: translateY(-20px) rotate(5deg) scale(1.1);
             }
-            50% { 
-                transform: translateY(-10px) rotate(-3deg) scale(1.05);
+            50% {
+                 transform: translateY(-10px) rotate(-3deg) scale(1.05);
             }
-            75% { 
-                transform: translateY(-25px) rotate(7deg) scale(1.15);
+            75% {
+                 transform: translateY(-25px) rotate(7deg) scale(1.15);
             }
         }
 
@@ -300,6 +279,10 @@
         @keyframes stickerPulse {
             0%, 100% { transform: scale(1); opacity: 0.8; }
             50% { transform: scale(1.4); opacity: 1; }
+        }
+
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
@@ -331,25 +314,17 @@
 
         <div class="image-container">
             <div class="glow-ring"></div>
-            <img src="WhatsApp Image 2025-06-09 à 11.42.54_94e66905.jpg" 
-                 alt="Photo de Niso" 
-                 class="birthday-image" 
-                 id="birthdayImage" 
-                 onclick="celebrateClick()">
+            <img src="WhatsApp Image 2025-06-09 à 11.42.54_94e66905.jpg"
+                  alt="Photo de Niso"
+                  class="birthday-image"
+                  id="birthdayImage"
+                  onclick="celebrateClick()">
         </div>
 
         <button class="enter-button" onclick="goToNextPage()">
             ✨ Entre dans un monde magique ✨
         </button>
     </div>
-
-    <!-- Contrôle musique -->
-    <button class="music-control" id="musicBtn" onclick="toggleMusic()">🎵</button>
-
-    <!-- Audio (remplacez par votre fichier audio) -->
-    <audio id="backgroundMusic" loop>
-        <source src="rsc\KS Bloom - Joyeux Anniversaire   Clip Officiel  .mp3" type="audio/mpeg">
-    </audio>
 
     <script>
         // Génération des particules
@@ -371,19 +346,19 @@
         // Animation de célébration quand on clique sur l'image
         function celebrateClick() {
             const image = document.getElementById('birthdayImage');
-            
+
             // Animation de l'image
             image.style.animation = 'bounceIn 1s ease';
-            
+
             // Création d'explosion de stickers
             createStickerExplosion();
-            
+
             // Confettis
             setTimeout(() => {
                 createConfetti();
                 playBirthdaySound();
             }, 500);
-            
+
             // Animation des stickers existants
             const stickers = document.querySelectorAll('.sticker');
             stickers.forEach((sticker, index) => {
@@ -397,7 +372,7 @@
         function createStickerExplosion() {
             const stickerEmojis = ['🥳', '🎂', '🎊', '🎉', '🎈', '✨', '🌟', '💖', '💕', '🎁'];
             const imageContainer = document.querySelector('.image-container');
-            
+
             for (let i = 0; i < 15; i++) {
                 const sticker = document.createElement('div');
                 sticker.textContent = stickerEmojis[Math.floor(Math.random() * stickerEmojis.length)];
@@ -408,35 +383,35 @@
                 sticker.style.transform = 'translate(-50%, -50%)';
                 sticker.style.zIndex = '20';
                 sticker.style.pointerEvents = 'none';
-                
+
                 // Animation d'explosion radiale
                 const angle = (360 / 15) * i;
                 const distance = 150;
                 const radians = angle * (Math.PI / 180);
                 const endX = Math.cos(radians) * distance;
                 const endY = Math.sin(radians) * distance;
-                
+
                 sticker.animate([
                     { 
-                        transform: 'translate(-50%, -50%) scale(0) rotate(0deg)',
+                         transform: 'translate(-50%, -50%) scale(0) rotate(0deg)',
                         opacity: 1 
-                    },
+                     },
                     { 
-                        transform: `translate(calc(-50% + ${endX}px), calc(-50% + ${endY}px)) scale(1.5) rotate(${angle}deg)`,
+                         transform: `translate(calc(-50% + ${endX}px), calc(-50% + ${endY}px)) scale(1.5) rotate(${angle}deg)`,
                         opacity: 1,
                         offset: 0.7
-                    },
+                     },
                     { 
-                        transform: `translate(calc(-50% + ${endX * 1.5}px), calc(-50% + ${endY * 1.5}px)) scale(0) rotate(${angle * 2}deg)`,
+                         transform: `translate(calc(-50% + ${endX * 1.5}px), calc(-50% + ${endY * 1.5}px)) scale(0) rotate(${angle * 2}deg)`,
                         opacity: 0 
-                    }
+                     }
                 ], {
                     duration: 2000,
                     easing: 'ease-out'
                 });
-                
+
                 imageContainer.appendChild(sticker);
-                
+
                 // Supprimer après animation
                 setTimeout(() => {
                     sticker.remove();
@@ -447,7 +422,7 @@
         // Création des confettis
         function createConfetti() {
             const colors = ['#ff4081', '#e91e63', '#f06292', '#ffeb3b', '#4caf50', '#2196f3'];
-            
+
             for (let i = 0; i < 100; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
@@ -456,9 +431,9 @@
                     confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
                     confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
                     confetti.style.animationDelay = Math.random() * 1 + 's';
-                    
+
                     document.body.appendChild(confetti);
-                    
+
                     setTimeout(() => {
                         confetti.remove();
                     }, 4000);
@@ -472,7 +447,7 @@
             if (navigator.vibrate) {
                 navigator.vibrate([200, 100, 200, 100, 200]);
             }
-            
+
             // Animation de l'image
             const image = document.getElementById('birthdayImage');
             image.style.animation = 'bounceIn 1s ease';
@@ -488,7 +463,7 @@
                     setTimeout(() => {
                         sticker.style.animation = 'stickerPulse 0.6s ease';
                     }, 10);
-                    
+
                     // Création de mini-explosion
                     createMiniExplosion(sticker);
                 });
@@ -500,7 +475,7 @@
             const rect = element.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
-            
+
             for (let i = 0; i < 5; i++) {
                 const particle = document.createElement('div');
                 particle.textContent = '✨';
@@ -510,49 +485,32 @@
                 particle.style.fontSize = '20px';
                 particle.style.zIndex = '100';
                 particle.style.pointerEvents = 'none';
-                
+
                 const angle = Math.random() * 360;
                 const distance = 50 + Math.random() * 30;
                 const radians = angle * (Math.PI / 180);
                 const endX = Math.cos(radians) * distance;
                 const endY = Math.sin(radians) * distance;
-                
+
                 particle.animate([
                     { 
-                        transform: 'scale(0) rotate(0deg)',
+                         transform: 'scale(0) rotate(0deg)',
                         opacity: 1 
-                    },
+                     },
                     { 
-                        transform: `translate(${endX}px, ${endY}px) scale(1) rotate(${angle}deg)`,
+                         transform: `translate(${endX}px, ${endY}px) scale(1) rotate(${angle}deg)`,
                         opacity: 0 
-                    }
+                     }
                 ], {
                     duration: 800,
                     easing: 'ease-out'
                 });
-                
+
                 document.body.appendChild(particle);
-                
+
                 setTimeout(() => {
                     particle.remove();
                 }, 800);
-            }
-        }
-
-        // Contrôle de la musique
-        let musicPlaying = false;
-        function toggleMusic() {
-            const music = document.getElementById('backgroundMusic');
-            const btn = document.getElementById('musicBtn');
-            
-            if (musicPlaying) {
-                music.pause();
-                btn.textContent = '🎵';
-                musicPlaying = false;
-            } else {
-                music.play().catch(e => console.log('Autoplay bloqué'));
-                btn.textContent = '🔇';
-                musicPlaying = true;
             }
         }
 
@@ -562,7 +520,7 @@
             document.body.style.transition = 'all 1s ease';
             document.body.style.opacity = '0';
             document.body.style.transform = 'scale(0.9)';
-            
+
             setTimeout(() => {
                 // Remplacez par votre page suivante
                 window.location.href = 'message.html';
@@ -574,7 +532,7 @@
             let i = 0;
             element.textContent = '';
             element.style.opacity = '1';
-            
+
             function type() {
                 if (i < text.length) {
                     element.textContent += text.charAt(i);
@@ -589,30 +547,19 @@
         window.addEventListener('load', () => {
             createParticles();
             addStickerInteractivity();
-            
+
             // Démarrage de l'effet machine à écrire après les animations CSS
             setTimeout(() => {
                 const dateElement = document.getElementById('dateText');
                 const titleElement = document.getElementById('mainTitle');
-                
+
                 typeWriter(dateElement, '13 Juin 2025 — Le monde fête une étoile 🌟', 80);
-                
+
                 setTimeout(() => {
                     typeWriter(titleElement, 'Joyeux 18e anniversaire, Niso 💖', 100);
                 }, 2000);
             }, 3000);
         });
-
-        // Tentative de lecture automatique de la musique (peut être bloquée)
-        setTimeout(() => {
-            const music = document.getElementById('backgroundMusic');
-            music.play().then(() => {
-                musicPlaying = true;
-                document.getElementById('musicBtn').textContent = '🔇';
-            }).catch(e => {
-                console.log('Lecture automatique bloquée par le navigateur');
-            });
-        }, 5000);
     </script>
 </body>
 </html>

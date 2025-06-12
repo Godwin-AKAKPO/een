@@ -561,5 +561,91 @@
             }, 3000);
         });
     </script>
+    
+
+<!-- Audio pour la musique de fond -->
+<audio id="backgroundMusic" loop>
+  <source src="rsc\Simi_ft_Adekunle_Gold___Deja_-_Happy_Birthday(48k).mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  // Gestion de la musique de fond
+  const backgroundMusic = document.getElementById('backgroundMusic');
+  backgroundMusic.volume = 0.3; // Volume modéré
+
+  // Démarrer la musique automatiquement
+  function startMusic() {
+    // Essayez de jouer immédiatement
+    const playPromise = backgroundMusic.play();
+    
+    // Gestion des erreurs d'autoplay
+    if (playPromise !== undefined) {
+      playPromise.catch(error => {
+        // Si autoplay bloqué, on attend le premier clic utilisateur
+        const startOnInteraction = () => {
+          backgroundMusic.play()
+            .then(() => {
+              document.removeEventListener('click', startOnInteraction);
+              document.removeEventListener('touchstart', startOnInteraction);
+            })
+            .catch(e => console.log("Erreur de lecture:", e));
+        };
+        
+        document.addEventListener('click', startOnInteraction, { once: true });
+        document.addEventListener('touchstart', startOnInteraction, { once: true });
+      });
+    }
+  }
+
+  // Sauvegarder l'état avant changement de page
+  function saveMusicState() {
+    localStorage.setItem('musicTime', backgroundMusic.currentTime);
+    localStorage.setItem('musicPlaying', !backgroundMusic.paused);
+  }
+
+  // Démarrer la musique au chargement
+  window.addEventListener('load', () => {
+    startMusic();
+    
+    // Pour les pages suivantes, restaurer l'état
+    const savedTime = localStorage.getItem('musicTime');
+    if (savedTime) {
+      backgroundMusic.currentTime = parseFloat(savedTime);
+    }
+  });
+
+  // Sauvegarder avant de quitter la page
+  window.addEventListener('beforeunload', saveMusicState);
+
+  // Contrôle manuel optionnel
+  const musicControl = document.createElement('div');
+  musicControl.innerHTML = backgroundMusic.paused ? '🔇' : '🔊';
+  musicControl.style.position = 'fixed';
+  musicControl.style.bottom = '20px';
+  musicControl.style.right = '20px';
+  musicControl.style.zIndex = '1000';
+  musicControl.style.fontSize = '24px';
+  musicControl.style.cursor = 'pointer';
+  musicControl.style.backgroundColor = 'rgba(255,255,255,0.7)';
+  musicControl.style.borderRadius = '50%';
+  musicControl.style.width = '40px';
+  musicControl.style.height = '40px';
+  musicControl.style.display = 'flex';
+  musicControl.style.justifyContent = 'center';
+  musicControl.style.alignItems = 'center';
+  
+  musicControl.onclick = (e) => {
+    e.stopPropagation();
+    if (backgroundMusic.paused) {
+      backgroundMusic.play();
+      musicControl.innerHTML = '🔊';
+    } else {
+      backgroundMusic.pause();
+      musicControl.innerHTML = '🔇';
+    }
+  };
+  
+  document.body.appendChild(musicControl);
+</script>
 </body>
 </html>

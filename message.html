@@ -423,6 +423,66 @@
         </div>
     </div>
 
+<!-- Audio pour la musique de fond -->
+<audio id="backgroundMusic" loop>
+  <source src="rsc\Simi_ft_Adekunle_Gold___Deja_-_Happy_Birthday(48k).mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const backgroundMusic = document.getElementById('backgroundMusic');
+  backgroundMusic.volume = 0.3;
+
+  // Restaurer l'état de la musique
+  window.addEventListener('load', () => {
+    const savedTime = localStorage.getItem('musicTime');
+    const wasPlaying = localStorage.getItem('musicPlaying') === 'true';
+    
+    if (savedTime) {
+      backgroundMusic.currentTime = parseFloat(savedTime);
+    }
+    
+    if (wasPlaying) {
+      backgroundMusic.play().catch(e => console.log("Autoplay bloqué:", e));
+    }
+  });
+
+  // Sauvegarder avant changement de page
+  window.addEventListener('beforeunload', () => {
+    localStorage.setItem('musicTime', backgroundMusic.currentTime);
+    localStorage.setItem('musicPlaying', !backgroundMusic.paused);
+  });
+
+  // Ajouter le même contrôle manuel que dans index.html
+  const musicControl = document.createElement('div');
+  musicControl.innerHTML = '🔊';
+  musicControl.style.position = 'fixed';
+  musicControl.style.bottom = '20px';
+  musicControl.style.right = '20px';
+  musicControl.style.zIndex = '1000';
+  musicControl.style.fontSize = '24px';
+  musicControl.style.cursor = 'pointer';
+  musicControl.style.backgroundColor = 'rgba(255,255,255,0.7)';
+  musicControl.style.borderRadius = '50%';
+  musicControl.style.width = '40px';
+  musicControl.style.height = '40px';
+  musicControl.style.display = 'flex';
+  musicControl.style.justifyContent = 'center';
+  musicControl.style.alignItems = 'center';
+  
+  musicControl.onclick = (e) => {
+    e.stopPropagation();
+    if (backgroundMusic.paused) {
+      backgroundMusic.play();
+      musicControl.innerHTML = '🔊';
+    } else {
+      backgroundMusic.pause();
+      musicControl.innerHTML = '🔇';
+    }
+  };
+  
+  document.body.appendChild(musicControl);
+</script>
+
     <script>
         // Création des particules romantiques
         function createRomanticParticles() {

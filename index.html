@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EEN 💗</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes:wght@400&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -20,6 +20,7 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            touch-action: manipulation;
         }
 
         @keyframes gradientShift {
@@ -58,10 +59,12 @@
             margin-bottom: 20px;
             opacity: 0;
             animation: fadeInUp 2s ease forwards;
+            width: 90%;
+            max-width: 600px;
         }
 
         .date-text {
-            font-size: 1.2rem;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             color: #ad1457;
             font-weight: 300;
             margin-bottom: 10px;
@@ -70,11 +73,12 @@
 
         .main-title {
             font-family: 'Great Vibes', cursive;
-            font-size: 3.5rem;
+            font-size: clamp(2rem, 8vw, 3.5rem);
             color: #880e4f;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             animation-delay: 1s;
+            line-height: 1.2;
         }
 
         @keyframes fadeInUp {
@@ -90,7 +94,7 @@
 
         /* Image centrale animée */
         .image-container {
-            margin: 40px 0;
+            margin: 30px 0;
             position: relative;
             animation: bounceIn 2s ease forwards;
             animation-delay: 2s;
@@ -116,8 +120,8 @@
         }
 
         .birthday-image {
-            width: 300px;
-            height: 300px;
+            width: 250px;
+            height: 250px;
             border-radius: 50%;
             object-fit: cover;
             border: 8px solid rgba(255, 255, 255, 0.8);
@@ -139,8 +143,8 @@
             position: absolute;
             top: -10px;
             left: -10px;
-            width: 320px;
-            height: 320px;
+            width: 270px;
+            height: 270px;
             border: 2px solid transparent;
             border-radius: 50%;
             background: linear-gradient(45deg, #ff4081, #e91e63, #f06292, #ff4081);
@@ -187,17 +191,19 @@
             background: linear-gradient(45deg, #e91e63, #f06292);
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            padding: 12px 30px;
+            font-size: clamp(1rem, 4vw, 1.2rem);
             font-weight: 600;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 8px 25px rgba(233, 30, 99, 0.3);
             transition: all 0.3s ease;
-            margin-top: 40px;
+            margin-top: 30px;
             opacity: 0;
             animation: fadeInUp 1s ease forwards;
             animation-delay: 3s;
+            width: 90%;
+            max-width: 300px;
         }
 
         .enter-button:hover {
@@ -206,29 +212,10 @@
             background: linear-gradient(45deg, #f06292, #e91e63);
         }
 
-        @media (max-width: 768px) {
-            .main-title {
-                font-size: 2.5rem;
-            }
-            .birthday-image {
-                width: 250px;
-                height: 250px;
-            }
-            .glow-ring {
-                width: 270px;
-                height: 270px;
-                top: -10px;
-                left: -10px;
-            }
-            .sticker {
-                font-size: 30px;
-            }
-        }
-
         /* Stickers animés */
         .sticker {
             position: absolute;
-            font-size: 40px;
+            font-size: clamp(20px, 6vw, 40px);
             animation: stickerFloat 4s ease-in-out infinite;
             cursor: pointer;
             transition: transform 0.3s ease;
@@ -281,6 +268,69 @@
             50% { transform: scale(1.4); opacity: 1; }
         }
 
+        /* Media Queries pour les petits écrans */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+                justify-content: flex-start;
+                padding-top: 30px;
+            }
+
+            .intro-text {
+                margin-bottom: 15px;
+            }
+
+            .main-title {
+                margin-bottom: 15px;
+            }
+
+            .image-container {
+                margin: 20px 0;
+            }
+
+            .birthday-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            .glow-ring {
+                width: 220px;
+                height: 220px;
+            }
+
+            .enter-button {
+                margin-top: 20px;
+                padding: 10px 25px;
+            }
+
+            /* Réduire le nombre de stickers sur mobile */
+            .sticker:nth-child(n+5) {
+                display: none;
+            }
+
+            /* Positionnement des stickers restants */
+            .sticker {
+                font-size: 24px;
+            }
+        }
+
+        /* Pour les très petits écrans */
+        @media (max-width: 360px) {
+            .birthday-image {
+                width: 180px;
+                height: 180px;
+            }
+
+            .glow-ring {
+                width: 200px;
+                height: 200px;
+            }
+
+            .main-title {
+                font-size: 1.8rem;
+            }
+        }
+
         .hidden {
             display: none !important;
         }
@@ -290,13 +340,13 @@
     <!-- Particules flottantes -->
     <div id="particles"></div>
 
-    <!-- Cœurs flottants -->
+    <!-- Cœurs flottants (réduits sur mobile) -->
     <div class="sticker" style="top: 10%; left: 10%; animation-delay: 0s;">💖</div>
     <div class="sticker sticker-bounce" style="top: 15%; right: 15%; animation-delay: 1s;">💕</div>
     <div class="sticker" style="bottom: 25%; left: 20%; animation-delay: 2s;">💗</div>
     <div class="sticker sticker-pulse" style="bottom: 35%; right: 10%; animation-delay: 3s;">💘</div>
 
-    <!-- Stickers d'anniversaire animés -->
+    <!-- Stickers d'anniversaire animés (seront masqués sur mobile) -->
     <div class="sticker sticker-bounce" style="top: 8%; left: 50%; animation-delay: 0.5s;">🥳</div>
     <div class="sticker sticker-spin" style="top: 25%; left: 5%; animation-delay: 1.5s;">🎂</div>
     <div class="sticker sticker-pulse" style="top: 30%; right: 5%; animation-delay: 2.5s;">🎊</div>
@@ -311,6 +361,8 @@
             <div class="date-text" id="dateText">13 Juin 2025 — Le monde fête une étoile 🌟</div>
             <h1 class="main-title" id="mainTitle">Joyeux 18ème anniversaire, Niso 💖</h1>
         </div>
+        <br>
+        <br>
 
         <div class="image-container">
             <div class="glow-ring"></div>
@@ -321,16 +373,22 @@
                   onclick="celebrateClick()">
         </div>
 
+        <br>
+        <br>
+
+
         <button class="enter-button" onclick="goToNextPage()">
             ✨ Entre dans un monde magique ✨
         </button>
     </div>
 
     <script>
-        // Génération des particules
+        // Génération des particules (moins nombreuses sur mobile)
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 50; i++) {
+            const particleCount = window.innerWidth < 768 ? 20 : 50;
+            
+            for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
@@ -368,16 +426,17 @@
             });
         }
 
-        // Explosion de stickers autour de l'image
+        // Explosion de stickers autour de l'image (moins nombreux sur mobile)
         function createStickerExplosion() {
             const stickerEmojis = ['🥳', '🎂', '🎊', '🎉', '🎈', '✨', '🌟', '💖', '💕', '🎁'];
             const imageContainer = document.querySelector('.image-container');
+            const explosionCount = window.innerWidth < 768 ? 8 : 15;
 
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < explosionCount; i++) {
                 const sticker = document.createElement('div');
                 sticker.textContent = stickerEmojis[Math.floor(Math.random() * stickerEmojis.length)];
                 sticker.style.position = 'absolute';
-                sticker.style.fontSize = '25px';
+                sticker.style.fontSize = window.innerWidth < 768 ? '20px' : '25px';
                 sticker.style.left = '50%';
                 sticker.style.top = '50%';
                 sticker.style.transform = 'translate(-50%, -50%)';
@@ -385,8 +444,8 @@
                 sticker.style.pointerEvents = 'none';
 
                 // Animation d'explosion radiale
-                const angle = (360 / 15) * i;
-                const distance = 150;
+                const angle = (360 / explosionCount) * i;
+                const distance = window.innerWidth < 768 ? 100 : 150;
                 const radians = angle * (Math.PI / 180);
                 const endX = Math.cos(radians) * distance;
                 const endY = Math.sin(radians) * distance;
@@ -419,11 +478,12 @@
             }
         }
 
-        // Création des confettis
+        // Création des confettis (moins nombreux sur mobile)
         function createConfetti() {
             const colors = ['#ff4081', '#e91e63', '#f06292', '#ffeb3b', '#4caf50', '#2196f3'];
+            const confettiCount = window.innerWidth < 768 ? 50 : 100;
 
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < confettiCount; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
@@ -475,19 +535,20 @@
             const rect = element.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
+            const particleCount = window.innerWidth < 768 ? 3 : 5;
 
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.textContent = '✨';
                 particle.style.position = 'fixed';
                 particle.style.left = centerX + 'px';
                 particle.style.top = centerY + 'px';
-                particle.style.fontSize = '20px';
+                particle.style.fontSize = window.innerWidth < 768 ? '16px' : '20px';
                 particle.style.zIndex = '100';
                 particle.style.pointerEvents = 'none';
 
                 const angle = Math.random() * 360;
-                const distance = 50 + Math.random() * 30;
+                const distance = window.innerWidth < 768 ? 30 + Math.random() * 20 : 50 + Math.random() * 30;
                 const radians = angle * (Math.PI / 180);
                 const endX = Math.cos(radians) * distance;
                 const endY = Math.sin(radians) * distance;
@@ -633,7 +694,7 @@
   // Sauvegarder avant de quitter la page
   window.addEventListener('beforeunload', saveMusicState);
 
-  // Création du contrôle stylé
+  // Création du contrôle stylé (version mobile-friendly)
   const musicControl = document.createElement('div');
   musicControl.innerHTML = `
     <div class="music-control">
@@ -644,20 +705,20 @@
     </div>
   `;
   
-  // Styles intégrés
+  // Styles intégrés (optimisés pour mobile)
   const style = document.createElement('style');
   style.textContent = `
     .music-control {
       position: fixed;
-      bottom: 25px;
-      right: 25px;
+      bottom: 20px;
+      right: 20px;
       z-index: 1000;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       background: rgba(255, 245, 247, 0.95);
       backdrop-filter: blur(8px);
-      padding: 10px 15px;
+      padding: 8px 12px;
       border-radius: 30px;
       box-shadow: 0 4px 15px rgba(233, 30, 99, 0.15);
       border: 1px solid rgba(255, 182, 193, 0.4);
@@ -672,10 +733,10 @@
     }
     
     .music-icon {
-      font-size: 26px;
+      font-size: 24px;
       cursor: pointer;
       transition: all 0.3s ease;
-      min-width: 30px;
+      min-width: 26px;
       text-align: center;
       color: #e91e63;
       filter: drop-shadow(0 2px 4px rgba(233, 30, 99, 0.2));
@@ -694,7 +755,7 @@
     
     .volume-slider {
       width: 100%;
-      height: 6px;
+      height: 5px;
       -webkit-appearance: none;
       background: rgba(233, 30, 99, 0.15);
       border-radius: 3px;
@@ -704,8 +765,8 @@
     
     .volume-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       background: #e91e63;
       cursor: pointer;
@@ -719,7 +780,7 @@
     }
     
     .music-control:hover .volume-container {
-      width: 100px;
+      width: 80px;
       opacity: 1;
     }
     
@@ -735,19 +796,29 @@
       animation: fadeInUp 0.6s ease-out 1s forwards;
     }
     
-    @media (max-width: 768px) {
+    /* Styles spécifiques pour mobile */
+    @media (max-width: 480px) {
       .music-control {
-        bottom: 20px;
-        right: 20px;
-        padding: 8px 12px;
-      }
-      
-      .music-control:hover .volume-container {
-        width: 80px;
+        bottom: 15px;
+        right: 15px;
+        padding: 6px 10px;
       }
       
       .music-icon {
-        font-size: 24px;
+        font-size: 22px;
+      }
+      
+      .music-control:hover .volume-container {
+        width: 70px;
+      }
+      
+      .volume-slider {
+        height: 4px;
+      }
+      
+      .volume-slider::-webkit-slider-thumb {
+        width: 12px;
+        height: 12px;
       }
     }
   `;

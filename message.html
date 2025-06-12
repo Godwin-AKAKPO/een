@@ -428,6 +428,7 @@
   <source src="rsc\Simi_ft_Adekunle_Gold___Deja_-_Happy_Birthday(48k).mp3" type="audio/mpeg">
 </audio>
 
+
 <script>
   const backgroundMusic = document.getElementById('backgroundMusic');
   backgroundMusic.volume = 0.3;
@@ -452,34 +453,155 @@
     localStorage.setItem('musicPlaying', !backgroundMusic.paused);
   });
 
-  // Ajouter le même contrôle manuel que dans index.html
+  // Création du contrôle stylé (identique au premier)
   const musicControl = document.createElement('div');
-  musicControl.innerHTML = '🔊';
-  musicControl.style.position = 'fixed';
-  musicControl.style.bottom = '20px';
-  musicControl.style.right = '20px';
-  musicControl.style.zIndex = '1000';
-  musicControl.style.fontSize = '24px';
-  musicControl.style.cursor = 'pointer';
-  musicControl.style.backgroundColor = 'rgba(255,255,255,0.7)';
-  musicControl.style.borderRadius = '50%';
-  musicControl.style.width = '40px';
-  musicControl.style.height = '40px';
-  musicControl.style.display = 'flex';
-  musicControl.style.justifyContent = 'center';
-  musicControl.style.alignItems = 'center';
+  musicControl.innerHTML = `
+    <div class="music-control">
+      <div class="music-icon">🎵</div>
+      <div class="volume-container">
+        <input type="range" min="0" max="1" step="0.01" value="0.3" class="volume-slider">
+      </div>
+    </div>
+  `;
   
-  musicControl.onclick = (e) => {
+  // Styles intégrés (identique au premier)
+  const style = document.createElement('style');
+  style.textContent = `
+    .music-control {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 245, 247, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 10px 15px;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.15);
+      border: 1px solid rgba(255, 182, 193, 0.4);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    }
+    
+    .music-control:hover {
+      transform: translateY(0) scale(1.05);
+      box-shadow: 0 6px 20px rgba(233, 30, 99, 0.25);
+    }
+    
+    .music-icon {
+      font-size: 26px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 30px;
+      text-align: center;
+      color: #e91e63;
+      filter: drop-shadow(0 2px 4px rgba(233, 30, 99, 0.2));
+    }
+    
+    .music-icon:hover {
+      transform: scale(1.15);
+    }
+    
+    .volume-container {
+      width: 0;
+      overflow: hidden;
+      transition: width 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    
+    .volume-slider {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      background: rgba(233, 30, 99, 0.15);
+      border-radius: 3px;
+      outline: none;
+      margin: 0 5px;
+    }
+    
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #e91e63;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .volume-slider::-webkit-slider-thumb:hover {
+      background: #c2185b;
+      transform: scale(1.1);
+    }
+    
+    .music-control:hover .volume-container {
+      width: 100px;
+      opacity: 1;
+    }
+    
+    /* Animation d'apparition */
+    @keyframes fadeInUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    .music-control {
+      animation: fadeInUp 0.6s ease-out 1s forwards;
+    }
+    
+    @media (max-width: 768px) {
+      .music-control {
+        bottom: 20px;
+        right: 20px;
+        padding: 8px 12px;
+      }
+      
+      .music-control:hover .volume-container {
+        width: 80px;
+      }
+      
+      .music-icon {
+        font-size: 24px;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Fonctionnalités
+  const icon = musicControl.querySelector('.music-icon');
+  const slider = musicControl.querySelector('.volume-slider');
+
+  icon.addEventListener('click', (e) => {
     e.stopPropagation();
     if (backgroundMusic.paused) {
       backgroundMusic.play();
-      musicControl.innerHTML = '🔊';
+      icon.innerHTML = '🎵';
+      icon.style.color = '#e91e63';
     } else {
       backgroundMusic.pause();
-      musicControl.innerHTML = '🔇';
+      icon.innerHTML = '🔇';
+      icon.style.color = '#ff6b6b';
     }
-  };
-  
+  });
+
+  slider.addEventListener('input', (e) => {
+    backgroundMusic.volume = e.target.value;
+    localStorage.setItem('musicVolume', e.target.value);
+  });
+
+  // Restaurer le volume si existant
+  const savedVolume = localStorage.getItem('musicVolume');
+  if (savedVolume) {
+    backgroundMusic.volume = parseFloat(savedVolume);
+    slider.value = savedVolume;
+  }
+
   document.body.appendChild(musicControl);
 </script>
 
